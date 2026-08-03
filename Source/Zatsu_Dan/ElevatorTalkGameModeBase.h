@@ -9,9 +9,10 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class ZATSU_DAN_API AElevatorTalkGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+	public:
+	AElevatorTalkGameModeBase();
 };

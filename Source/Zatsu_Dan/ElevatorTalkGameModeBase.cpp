@@ -2,4 +2,12 @@
 
 
 #include "ElevatorTalkGameModeBase.h"
+#include "GameFramework/HUD.h"
 
+AElevatorTalkGameModeBase::AElevatorTalkGameModeBase()
+{
+	if (DefaultPawnClass != nullptr)
+	{
+		DefaultPawnClass = nullptr;
+	}
+}
