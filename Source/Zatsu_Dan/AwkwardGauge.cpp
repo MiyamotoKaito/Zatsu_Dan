@@ -11,7 +11,7 @@ void UAwkwardGauge::NativeTick(const FGeometry& Geometry, float DeltaTime)
 {
 	Super::NativeTick(Geometry, DeltaTime);
 	
-	if (!bIsStarted)
+	if (bIsStarted)
 	{
 		return;
 	}

@@ -6,8 +6,5 @@
 
 AElevatorTalkGameModeBase::AElevatorTalkGameModeBase()
 {
-	if (DefaultPawnClass != nullptr)
-	{
-		DefaultPawnClass = nullptr;
-	}
+	
 }
