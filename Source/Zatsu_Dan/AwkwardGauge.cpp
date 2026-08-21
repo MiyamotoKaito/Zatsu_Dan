@@ -2,8 +2,8 @@
 
 void UAwkwardGauge::SetValue(float InMaxValue)
 {
-	MaxtValue = InMaxValue;
-	CurrentValue = MaxtValue;
+	MaxValue = InMaxValue;
+	CurrentValue = MaxValue;
 	UpdateProgressBar();
 }
 
@@ -32,5 +32,5 @@ void UAwkwardGauge::NativeTick(const FGeometry& Geometry, float DeltaTime)
 
 void UAwkwardGauge::UpdateProgressBar()
 {
-	ProgressBar->SetPercent(CurrentValue / MaxtValue);
+	ProgressBar->SetPercent(CurrentValue / MaxValue);
 }

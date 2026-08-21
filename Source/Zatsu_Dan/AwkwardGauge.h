@@ -32,7 +32,7 @@ protected:
 	TObjectPtr<UProgressBar> ProgressBar;
 	/**最大値*/
 	UPROPERTY(Blueprintable, EditAnywhere, Category = "Stats")
-	float MaxtValue;
+	float MaxValue;
 	/**UIのTickに相当する関数*/
 	virtual void NativeTick(const FGeometry& Geometry, float DeltaTime)override;
 private:
