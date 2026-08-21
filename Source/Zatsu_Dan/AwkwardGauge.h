@@ -33,9 +33,6 @@ protected:
 	/**最大値*/
 	UPROPERTY(Blueprintable, EditAnywhere, Category = "Stats")
 	float MaxtValue;
-	/**減少速度*/
-	UPROPERTY(Blueprintable, EditAnywhere, Category = "Stats")
-	float DecreaseRate = 0.1f;
 	/**UIのTickに相当する関数*/
 	virtual void NativeTick(const FGeometry& Geometry, float DeltaTime)override;
 private:
