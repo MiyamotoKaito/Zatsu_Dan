@@ -7,7 +7,7 @@
 #include "Components/ProgressBar.h"
 #include "AwkwardGauge.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGaugeEmpty);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAwkwardGaugeEmptySignature);
 
 /**
  * 気まずいゲージ
@@ -23,15 +23,16 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Stats")
 	void SetValue(float InMaxValue);
+	
 	/** 気まずいゲージが０になったら発火するイベント(BluePrintで登録する)*/
 	UPROPERTY(BlueprintAssignable, Category = "Stats")
-	FOnGaugeEmpty OnGaugeEmpty;
+	FOnAwkwardGaugeEmptySignature OnGaugeEmpty;
 protected:
 	/**気まずいゲージのImage*/
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UProgressBar> ProgressBar;
 	/**最大値*/
-	UPROPERTY(Blueprintable, EditAnywhere, Category = "Stats")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,  Category = "Stats")
 	float MaxValue;
 	/**UIのTickに相当する関数*/
 	virtual void NativeTick(const FGeometry& Geometry, float DeltaTime)override;

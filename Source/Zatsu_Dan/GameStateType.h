@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
-#include "GameState.generated.h"
+#include "GameStateType.generated.h"
 
 /**
  *　ゲームの状態を全て管理するステート
  */
 UENUM(BlueprintType)
-enum class  EGameState  : uint8
+enum class  EGameStateType  : uint8
 {
 	Title			UMETA(DisplayName = "タイトル"),
 	TitleStart		UMETA(DisplayName = "タイトル開始"),
