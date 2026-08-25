@@ -6,24 +6,14 @@
 #include "GameFramework/Character.h"
 #include "ListenerBase.generated.h"
 
+/**
+ * 話を聞く側のキャラクター
+ */
 UCLASS(Blueprintable)
 class ZATSU_DAN_API AListenerBase : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	AListenerBase();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 };

@@ -3,26 +3,68 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AwkwardGauge.h"
+#include "ListenerBase.h"
+#include "SpeakerBase.h"
 #include "Components/ActorComponent.h"
 #include "TalkSystem.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAwkwardGaugeEmpty);
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+/**
+ * 会話(神)クラス
+ */
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ZATSU_DAN_API UTalkSystem : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
+public:
+	/**
+	 * ゲームスタート
+	 */
 	UTalkSystem();
-
+	/** 
+	 * レベルに配置されているキャラクターを取得する 
+	 */
+	UFUNCTION(BlueprintCallable, Category = "TalkSystem")
+	void SetPeople(ASpeakerBase* SpeakerBase,
+		AListenerBase* ListenerBase,
+		UAwkwardGauge* Gauge);
+	/**
+	 * 会話スタート
+	 */
+	UFUNCTION(BlueprintCallable, Category = "TalkSystem")
+	void StartTalk();
+	/**
+	 * 会話を止める
+	 */
+	UFUNCTION(BlueprintCallable, Category = "TalkSystem")
+	void StopTalk();
+	/**
+	 * 気まずいゲージを増減させる
+	 * @param Amount 
+	 */
+	UFUNCTION(BlueprintCallable, Category = "TalkSystem")
+	void ModifyAwkward(float Amount);
+	
+	/**
+	 * 気まずいゲージが０になった時のデリゲート
+	 */
+	UPROPERTY(BlueprintAssignable, Category = "TalkSystem")
+	FOnAwkwardGaugeEmpty OnAwkwardGaugeEmpty;
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
+	virtual void TickComponent(float DeltaTime,ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TalkSystem")
+	float MaxAwkward = 30.0f;
+private:
+	void SetAwkward(float NewValue);
+	
+	TObjectPtr<ASpeakerBase> Speaker;
+	TObjectPtr<AListenerBase> Listener;
+	TObjectPtr<UAwkwardGauge> AwkwardGauge;
+	
+	float CurrentAwkward = 0.0f;
+	bool bIsTalking = false;
 };

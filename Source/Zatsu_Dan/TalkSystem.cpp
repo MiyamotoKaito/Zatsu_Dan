@@ -3,32 +3,63 @@
 
 #include "TalkSystem.h"
 
-// Sets default values for this component's properties
 UTalkSystem::UTalkSystem()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
-}
-
-
-// Called when the game starts
-void UTalkSystem::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
+	PrimaryComponentTick.bCanEverTick = false; 
 	
+	CurrentAwkward = MaxAwkward;
 }
 
+void UTalkSystem::SetPeople(ASpeakerBase* SpeakerBase,
+	AListenerBase* ListenerBase,
+	UAwkwardGauge* Gauge)
+{
+	Speaker = SpeakerBase;
+	Listener = ListenerBase;
+	AwkwardGauge = Gauge;
+}
 
-// Called every frame
+void UTalkSystem::StartTalk()
+{
+	bIsTalking = true;
+}
+
+void UTalkSystem::StopTalk()
+{
+	bIsTalking = false;
+}
+
+void UTalkSystem::ModifyAwkward(float Amount)
+{
+	SetAwkward(CurrentAwkward + Amount);
+}
+
 void UTalkSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
+	if (!bIsTalking)
+	{
+		return;
+	}
+	
+	CurrentAwkward -= DeltaTime;
+	
+	if (CurrentAwkward < 0.0f)
+	{
+		CurrentAwkward = 0.0f;
+		//　二重に発火するのを防ぐためにfalseに
+		bIsTalking = false;
+		// イベント発火
+		OnAwkwardGaugeEmpty.Broadcast();
+	}
+	
+	SetAwkward(CurrentAwkward / MaxAwkward);
+}
 
-	// ...
+void UTalkSystem::SetAwkward(float NewValue)
+{
+	AwkwardGauge->UpdateProgressBar(NewValue);
 }
 
