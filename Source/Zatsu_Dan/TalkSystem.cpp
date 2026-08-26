@@ -18,6 +18,19 @@ void UTalkSystem::SetPeople(ASpeakerBase* SpeakerBase,
 	Speaker = SpeakerBase;
 	Listener = ListenerBase;
 	AwkwardGauge = Gauge;
+	
+	if (Speaker == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SpeakerがNullです"));
+	}
+	if (Listener == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ListenerがNullです"))
+	}
+	if (AwkwardGauge == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("気まずいゲージがNullです"));
+	}
 }
 
 void UTalkSystem::StartTalk()
