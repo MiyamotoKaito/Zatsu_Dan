@@ -6,9 +6,6 @@
 UTalkSystem::UTalkSystem()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-	PrimaryComponentTick.bCanEverTick = false; 
-	
-	CurrentAwkward = MaxAwkward;
 }
 
 void UTalkSystem::SetPeople(ASpeakerBase* SpeakerBase,
@@ -31,6 +28,9 @@ void UTalkSystem::SetPeople(ASpeakerBase* SpeakerBase,
 	{
 		UE_LOG(LogTemp, Warning, TEXT("気まずいゲージがNullです"));
 	}
+	
+	// ゲージの初期表示を現在値に合わせる
+	SetAwkward(CurrentAwkward);
 }
 
 void UTalkSystem::StartTalk()
@@ -48,6 +48,11 @@ void UTalkSystem::ModifyAwkward(float Amount)
 	SetAwkward(CurrentAwkward + Amount);
 }
 
+void UTalkSystem::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void UTalkSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -57,22 +62,26 @@ void UTalkSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 		return;
 	}
 	
-	CurrentAwkward -= DeltaTime;
+	SetAwkward(CurrentAwkward += DeltaTime);
 	
-	if (CurrentAwkward < 0.0f)
+	if (CurrentAwkward > MaxAwkward)
 	{
-		CurrentAwkward = 0.0f;
 		//　二重に発火するのを防ぐためにfalseに
 		bIsTalking = false;
 		// イベント発火
 		OnAwkwardGaugeEmpty.Broadcast();
 	}
-	
-	SetAwkward(CurrentAwkward / MaxAwkward);
 }
 
 void UTalkSystem::SetAwkward(float NewValue)
 {
-	AwkwardGauge->UpdateProgressBar(NewValue);
+	CurrentAwkward = FMath::Clamp(NewValue, 0.0f, MaxAwkward);
+	
+	if (AwkwardGauge == nullptr)
+	{
+		return;
+	}
+	
+	// ProgressBarは0〜1の割合を受け取るので正規化して渡す
+	AwkwardGauge->UpdateProgressBar(CurrentAwkward / MaxAwkward);
 }
-

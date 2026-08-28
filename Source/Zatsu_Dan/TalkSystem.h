@@ -33,11 +33,13 @@ public:
 		UAwkwardGauge* Gauge);
 	/**
 	 * 会話スタート
+	 * BPで呼べ、C++で呼ぶなカス
 	 */
 	UFUNCTION(BlueprintCallable, Category = "TalkSystem")
 	void StartTalk();
 	/**
 	 * 会話を止める
+	 * BPで呼べ、C++で呼ぶなカス
 	 */
 	UFUNCTION(BlueprintCallable, Category = "TalkSystem")
 	void StopTalk();
@@ -54,6 +56,7 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "TalkSystem")
 	FOnAwkwardGaugeEmpty OnAwkwardGaugeEmpty;
 protected:
+	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime,ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TalkSystem")
