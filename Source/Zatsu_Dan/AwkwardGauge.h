@@ -20,7 +20,7 @@ public:
 	 * @param InMaxValue 
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Stats")
-		void UpdateProgressBar(float InMaxValue);
+	void UpdateProgressBar(float InMaxValue);
 
 protected:
 	/**気まずいゲージのImage*/

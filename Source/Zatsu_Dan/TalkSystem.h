@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AwkwardGauge.h"
+#include "Choice.h"
 #include "ListenerBase.h"
 #include "SpeakerBase.h"
 #include "Components/ActorComponent.h"
@@ -67,6 +68,8 @@ private:
 	TObjectPtr<ASpeakerBase> Speaker;
 	TObjectPtr<AListenerBase> Listener;
 	TObjectPtr<UAwkwardGauge> AwkwardGauge;
+	
+	TObjectPtr<UChoice> Choice;
 	
 	float CurrentAwkward = 0.0f;
 	bool bIsTalking = false;
