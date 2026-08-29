@@ -17,5 +17,5 @@ class ZATSU_DAN_API UChoice : public UUserWidget
 public:
 	/* ボタンの配列 */
 	UPROPERTY(BlueprintType, EditAnywhere, Category = "Button")
-	TArray<UChoiceButton> ChoiceButtons;
+	TArray<TObjectPtr<UChoiceButton>> ChoiceButtons;
 };
